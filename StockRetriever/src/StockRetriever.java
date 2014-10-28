@@ -14,7 +14,7 @@ import com.google.gson.JsonParser;
 public class StockRetriever {
 
 	public static void main(String[] args) throws IOException {
-		String symbol = "GOOGL";
+		String symbol = "HL.L";
 		String start = "2013-01-01";
 		String end = "2014-01-01";
 		new StockRetriever().retrieveStockData(symbol, start, end);
@@ -37,12 +37,14 @@ public class StockRetriever {
 			JsonObject resultsJson = queryJson.getAsJsonObject("results");
 			JsonArray rowJson = resultsJson.getAsJsonArray("quote");
 
+			System.out.println("{\"query\":{\"count\":" + count + ",\"created\":\"2013-10-28T17:38:10Z\",\"lang\":\"en-US\",\"results\":{\"quote\":");
 			System.out.print("[");
 			for (int i = 1; i < count; i++) {
 				JsonObject row = rowJson.get(i).getAsJsonObject();
 				printRow(row, i, count - 1);
 			}
-			System.out.print("]");
+			System.out.println("]");
+			System.out.println("}}}");
 		} else {
 			System.out.println("zero results :(");
 		}
@@ -75,10 +77,10 @@ public class StockRetriever {
 		String date = row.get("Date").getAsString();
 		System.out.println("{");
 		System.out.println("\t\"remainingDays\": \"" + (max - index) + "\",");
-		System.out.println("\t\"open\": \"" + open + "\",");
-		System.out.println("\t\"close\": \"" + close + "\",");
-		System.out.println("\t\"high\": \"" + high + "\",");
-		System.out.println("\t\"low\": \"" + low + "\",");
+		System.out.println("\t\"Open\": \"" + open + "\",");
+		System.out.println("\t\"Close\": \"" + close + "\",");
+		System.out.println("\t\"High\": \"" + high + "\",");
+		System.out.println("\t\"Low\": \"" + low + "\",");
 		System.out.println("\t\"day\": \"" + index + "\",");
 		System.out.println("\t\"date\": \"" + date + "\"");
 		System.out.print("}");
